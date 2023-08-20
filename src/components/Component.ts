@@ -6,6 +6,7 @@ interface Props<T extends State> {
 type State = any;
 
 type SetupProps<T extends State> = Pick<Props<T>, 'initialState'>;
+type NextStateFn<T extends State> = (prevState?: T) => State;
 
 class Component<T = State> {
   state: T | undefined;
@@ -19,8 +20,12 @@ class Component<T = State> {
     this.render();
   }
 
-  setState(nextState: T) {
-    this.state = nextState;
+  setState(nextState: T | NextStateFn<T>) {
+    if (typeof nextState === 'function') {
+      this.state = (nextState as NextStateFn<T>)(this.state);
+    } else {
+      this.state = nextState;
+    }
 
     this.render();
   }

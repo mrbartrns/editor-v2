@@ -23,9 +23,13 @@ class App extends Component<State> {
 
       if ($btn && (e.target as HTMLElement).contains($btn)) {
         console.log('clicked');
-        this.setState({
-          message: 'You Clicked Button!',
-        });
+        // this.setState({
+        //   message: 'You Clicked Button!',
+        // });
+        this.setState((prev) => ({
+          ...prev,
+          message: 'You Clicked Button!(using prevFn)',
+        }));
       }
     });
   }

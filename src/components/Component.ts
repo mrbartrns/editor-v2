@@ -5,6 +5,8 @@ interface Props<T extends State> {
 
 type State = any;
 
+type SetupProps<T extends State> = Pick<Props<T>, 'initialState'>;
+
 class Component<T = State> {
   state: T | undefined;
   element: HTMLElement | Element;
@@ -13,6 +15,7 @@ class Component<T = State> {
     const { element, initialState } = props;
     this.element = element;
     this.state = initialState;
+    this.setup({ initialState });
     this.render();
   }
 
@@ -20,6 +23,10 @@ class Component<T = State> {
     this.state = nextState;
 
     this.render();
+  }
+
+  setup(props: SetupProps<T>) {
+    this.state = props.initialState;
   }
 
   render() {

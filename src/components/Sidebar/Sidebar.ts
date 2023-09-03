@@ -1,16 +1,17 @@
-import { Component } from "..";
+import { Component } from '..';
 
 interface Node<T> {
   nodeId: string;
-  data: T | null
-  children?: Node<T> | null
+  data: T | null;
+  children?: Node<T> | null;
 }
 
-interface State {
-  root: 
+interface State<T> {
+  root: Node<T | null>;
 }
 
-class Sidebar extends Component {
+class Sidebar extends Component<State> {
+  declare state: State;
   setup() {}
 }
 

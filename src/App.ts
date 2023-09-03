@@ -1,9 +1,5 @@
 import { Component } from './components';
 
-interface Props {
-  element: HTMLElement | Element;
-}
-
 interface State {
   message: string;
 }
@@ -11,30 +7,6 @@ interface State {
 class App extends Component<State> {
   declare state: State;
 
-  constructor(props: Props) {
-    const { element } = props;
-    super({ element });
-
-    // page에다가 이벤트를 걸어주기
-    this.element.addEventListener('click', (e) => {
-      if (!e.target) return;
-
-      const $btn = (e.target as HTMLElement).closest('.btn');
-
-      if ($btn && (e.target as HTMLElement).contains($btn)) {
-        console.log('clicked');
-        // this.setState({
-        //   message: 'You Clicked Button!',
-        // });
-        this.setState((prev) => ({
-          ...prev,
-          message: 'You Clicked Button!(using prevFn)',
-        }));
-      }
-    });
-  }
-
-  // use this method before render
   setup() {
     this.state = {
       message: 'Hello, World!',
@@ -48,6 +20,24 @@ class App extends Component<State> {
         <button type="button" class="btn">Click</button>
       </div>
     `;
+  }
+
+  componentDidMount(): void {
+    // page에다가 이벤트를 걸어주기
+    const { element } = this.props;
+    element.addEventListener('click', (e) => {
+      if (!e.target) return;
+
+      const $btn = (e.target as HTMLElement).closest('.btn');
+
+      if ($btn && (e.target as HTMLElement).contains($btn)) {
+        console.log('clicked');
+        this.setState((prev) => ({
+          ...prev,
+          message: 'You Clicked Button!(using prevFn)',
+        }));
+      }
+    });
   }
 }
 

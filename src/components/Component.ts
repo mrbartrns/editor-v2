@@ -1,6 +1,7 @@
 interface Props<T extends State> {
   element: HTMLElement | Element;
   initialState?: T;
+  [key: string]: any;
 }
 
 type State = any;
@@ -9,15 +10,14 @@ type SetupProps<T extends State> = Pick<Props<T>, 'initialState'>;
 type NextStateFn<T extends State> = (prevState?: T) => State;
 
 class Component<T = State> {
-  state: T | undefined;
-  element: HTMLElement | Element;
+  state?: T;
+  props: Props<T>;
 
   constructor(props: Props<T>) {
-    const { element, initialState } = props;
-    this.element = element;
-    this.state = initialState;
-    this.setup({ initialState });
+    this.props = props;
+    this.setup({ initialState: this.props.initialState });
     this.render();
+    this.componentDidMount();
   }
 
   setState(nextState: T | NextStateFn<T>) {
@@ -34,8 +34,11 @@ class Component<T = State> {
     this.state = props.initialState;
   }
 
+  componentDidMount() {}
+
   render() {
-    this.element.innerHTML = this.template();
+    const { element } = this.props;
+    element.innerHTML = this.template();
   }
 
   template() {

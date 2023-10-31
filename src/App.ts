@@ -13,7 +13,7 @@ class App extends Component<State> {
     };
   }
 
-  template(): string {
+  render(): string {
     return `
       <h1>${this.state.message}</h1>
       <div>

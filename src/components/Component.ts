@@ -16,7 +16,7 @@ class Component<T = State> {
   constructor(props: Props<T>) {
     this.props = props;
     this.setup({ initialState: this.props.initialState });
-    this.render();
+    this.renderTemplate();
     this.componentDidMount();
   }
 
@@ -27,7 +27,7 @@ class Component<T = State> {
       this.state = nextState;
     }
 
-    this.render();
+    this.renderTemplate();
   }
 
   setup(props: SetupProps<T>) {
@@ -36,12 +36,12 @@ class Component<T = State> {
 
   componentDidMount() {}
 
-  render() {
+  private renderTemplate() {
     const { element } = this.props;
-    element.innerHTML = this.template();
+    element.innerHTML = this.render();
   }
 
-  template() {
+  render() {
     return ``;
   }
 }
